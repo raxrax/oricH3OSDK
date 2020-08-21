@@ -104,12 +104,9 @@ void circles()
 
 void demoPattern(unsigned char p)
 {
-   char str[15] = "               ";
    h3SetPattern(p);
    h3Cls();
-   sprintf(str, "Pattern: %d ", p);
-   h3String(5, 5, str);
-
+ 
    for (i = 14; i < MAX_Y; i += 4)
    {
       h3Draw(0, i, 59, i);
