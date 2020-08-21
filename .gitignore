@@ -1,0 +1,11 @@
+Makefile.local
+obj/
+*.brk
+*.sym
+*.dsk
+*.hfe
+*.HFE
+.vscode/
+
+puzzle
+puzzle.tap
