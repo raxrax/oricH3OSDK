@@ -12,8 +12,8 @@
 #define MAX_X 60
 #define MAX_Y 64
 
-#define MAX_NUMBER_OF_CHARS_PER_X 10
-#define MAX_NUMBER_OF_CHARS_PER_Y 8
+#define MAX_CHARS_PER_X 10
+#define MAX_CHARS_PER_Y 8
 
 unsigned h3Buffer[80 * 8];
 unsigned char h3fb = 1;
@@ -129,7 +129,7 @@ void h3ShowCanvas(unsigned char x, unsigned char y)
     for (y = 0; y < 8; ++y)
     {
         poke(addr - 1 + y * 40, 9);
-        poke(addr + y * 40 + MAX_NUMBER_OF_CHARS_PER_X, 8);
+        poke(addr + y * 40 + MAX_CHARS_PER_X, 8);
     }
 
     //print chars

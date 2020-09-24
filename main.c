@@ -1,7 +1,5 @@
 #include <lib.h>
 
-//#define abs(x) ((x & 0x7fff))
-
 
 #include "h3.h"
 #include "common.c"
@@ -192,7 +190,6 @@ void about()
 
 void main()
 {
-
    cls();
    paper(0);
    ink(7);

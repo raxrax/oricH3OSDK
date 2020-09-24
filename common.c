@@ -49,8 +49,6 @@ void stars()
     }
 }
 
-
-
 void rain()
 {
     unsigned char i,r,x;
@@ -65,12 +63,12 @@ void rain()
     }
 
     h3SetPattern(85);
-    for(i=5;i<50;i+=3){
+    for(i=7;i<50;i+=3){
         h3Draw(i,12,i+6,55);
     }
 
     i=0;
-    for(loop=0;loop<7000;++loop){
+    for(loop=0;loop<3000;++loop){
 
         if (loop % 500 == 0)
         {
