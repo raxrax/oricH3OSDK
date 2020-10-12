@@ -7,7 +7,7 @@
 #ifndef __H3H__
 #define __H3H__
 
-#define abs(x)      (((x)<0)?-(x):(x))
+#define abs(x) (((x) < 0) ? -(x) : (x))
 
 #define MAX_X 60
 #define MAX_Y 64
@@ -119,7 +119,6 @@ unsigned char CHARSET[] = {
     40, 20, 40, 20, 40, 20,
     60, 60, 60, 60, 60, 60};
 
-
 void h3ShowCanvas(unsigned char x, unsigned char y)
 {
     unsigned char chr = 32;
@@ -198,11 +197,17 @@ void h3Char(unsigned char x, unsigned char y, unsigned char c)
         c = peek(addr++);
 
         if (c & 32)
+        {
             h3Curset(x, y + l);
+        }
         if (c & 16)
+        {
             h3Curset(x + 1, y + l);
+        }
         if (c & 8)
+        {
             h3Curset(x + 2, y + l);
+        }
     }
 }
 
@@ -252,9 +257,13 @@ void h3Circle(int xm, int ym, int r)
 
         r = err;
         if (r > x)
+        {
             err += ++x * 2 + 1;
+        }
         if (r <= y)
+        {
             err += ++y * 2 + 1;
+        }
     } while (x < 0);
 }
 
@@ -281,7 +290,9 @@ void h3Draw(int x0, int y0, int x1, int y1)
         }
 
         if (x0 == x1 && y0 == y1)
+        {
             break;
+        }
 
         e2 = 2 * err;
         if (e2 >= dy)
