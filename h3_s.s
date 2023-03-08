@@ -7,6 +7,11 @@
 ;; #define OPCODE_INC_ZERO $E6
 ;; #endif
 
+#define MAX_X 60
+#define MAX_Y 64
+
+
+
 ;; void h3_curset()
 _h3_curset:
 .(
@@ -198,8 +203,17 @@ h3DrawLine_loop:
 ;;         ;;printf ("plot [%d, %d] %d %d\n", _h3A1X, _h3A1Y, distseg, ch2disp);get ();          
 
         ;; if ((A1Y >= 0) && (A1Y < MAX_Y) && (A1X >= 0) && (A1X < MAX_X))
-            lda _h3A1X : sta _h3X :
-            lda _h3A1Y : sta _h3Y :
+        lda _h3A1Y
+        bmi skipOutOfBoundPixel
+        cmp #MAX_Y
+        bcs skipOutOfBoundPixel
+        sta _h3Y :
+        lda _h3A1X
+        bmi skipOutOfBoundPixel
+        cmp #MAX_X
+        bcs skipOutOfBoundPixel
+        sta _h3X
+
             jsr _h3_curset
 skipOutOfBoundPixel:
 ;;         if ((A1X == A1destX) && (A1Y == A1destY)) break;
