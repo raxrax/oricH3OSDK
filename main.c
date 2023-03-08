@@ -15,17 +15,17 @@ void border()
    //    h3Draw(0, 63, 59, 63);
    //   // h3Draw(0, 63, 0, 0);
 
-   h3Draw(0, 0, 5, 0);
-   h3Draw(0, 0, 0, 5);
+   h3Line(0, 0, 5, 0);
+   h3Line(0, 0, 0, 5);
 
-   h3Draw(54, 0, 59, 0);
-   h3Draw(59, 0, 59, 5);
+   h3Line(54, 0, 59, 0);
+   h3Line(59, 0, 59, 5);
 
-   h3Draw(59, 63, 59, 58);
-   h3Draw(59, 63, 54, 63);
+   h3Line(59, 63, 59, 58);
+   h3Line(59, 63, 54, 63);
 
-   h3Draw(0, 63, 0, 58);
-   h3Draw(0, 63, 5, 63);
+   h3Line(0, 63, 0, 58);
+   h3Line(0, 63, 5, 63);
 }
 
 void intro()
@@ -40,7 +40,7 @@ void intro()
    h3Cls();
    border();
    h3String(5, 3, "LIB: h3.h");
-   h3Draw(5, 10, 40, 10);
+   h3Line(5, 10, 40, 10);
    // h3Draw(5, 11, 40, 11);
    h3String(5, 20, "This library\nemulates\ngraphic mode\n(60x64 px)\ninto lores\nchars");
    get();
@@ -75,7 +75,7 @@ void lines()
 
    for (i = 0; i < 55; ++i)
    {
-      h3Draw(rand() % MAX_X, rand() % MAX_Y, rand() % MAX_X, rand() % MAX_Y);
+      h3Line(rand() % MAX_X, rand() % MAX_Y, rand() % MAX_X, rand() % MAX_Y);
    }
 
    get();
@@ -207,10 +207,10 @@ void main()
    h3ShowCanvas(5, 16);
    h3ShowCanvas(26, 16);
 
-   h3Draw(0, 0, 59, 63);
+   h3Line(0, 0, 59, 63);
    h3Circle(MAX_X / 2, MAX_Y / 2, 25);
    for (i = 0; i < 10; i++)
-      h3Draw(0, 0, 59, 63);
+      h3Line(0, 0, 59, 63);
 
    h3SetFB(1);
 

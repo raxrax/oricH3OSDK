@@ -170,17 +170,17 @@ void h3Curset(unsigned char x, unsigned char y)
     {
     case 0:
         // poke(h3Addr, peek(h3Addr) & ~h3OffsetX);
-        // *((unsigned char*)h3Addr) &= ~h3OffsetX;
+        *((unsigned char*)h3Addr) &= ~h3OffsetX;
         break;
 
     case 1:
         // poke(h3Addr, peek(h3Addr) | h3OffsetX);
-        // *((unsigned char*)h3Addr) |= h3OffsetX;
+        *((unsigned char*)h3Addr) |= h3OffsetX;
         break;
 
     case 2:
         // poke(h3Addr, peek(h3Addr) ^ h3OffsetX);
-        // *((unsigned char*)h3Addr) ^= h3OffsetX;
+        *((unsigned char*)h3Addr) ^= h3OffsetX;
         break;
     }
 #endif 
@@ -275,6 +275,75 @@ void h3Circle(int xm, int ym, int r)
             err += ++y * 2 + 1;
         }
     } while (x < 0);
+}
+
+
+extern signed char h3P1X, h3P1Y, h3P2X, h3P2Y;
+#ifdef USE_C_H3_CURSET
+extern signed char h3A1X;
+extern signed char h3A1Y;
+extern signed char h3A1destX;
+extern signed char h3A1destY;
+extern signed char h3A1dX;
+extern signed char h3A1dY;
+extern signed char h3A1err;
+extern signed char h3A1sX;
+extern signed char h3A1sY;
+extern char        h3A1arrived;
+#endif
+void h3Line(int x0, int y0, int x1, int y1)
+{
+    signed char e2;
+    h3P1X = (signed char)x0;
+    h3P1Y = (signed char)y0;
+    h3P2X = (signed char)x1;
+    h3P2Y = (signed char)y1;
+
+#ifndef USE_C_H3_CURSET
+
+    h3DrawLine();
+#else
+    h3A1X     = h3P1X;
+    h3A1Y     = h3P1Y;
+    h3A1destX = h3P2X;
+    h3A1destY = h3P2Y;
+
+    h3A1dX    = abs(h3P2X - h3P1X);
+    h3A1dY    = -abs(h3P2Y - h3P1Y);
+    h3A1sX    = h3P1X < h3P2X ? 1 : -1;
+    h3A1sY    = h3P1Y < h3P2Y ? 1 : -1;
+    h3A1err   = h3A1dX + h3A1dY;
+
+    if ((h3A1err > 64) || (h3A1err < -63))
+        return;
+
+    while (1) {  // loop
+
+        if ((h3A1Y >= 0) && (h3A1Y < MAX_Y) && (h3A1X >= 0) && (h3A1X < MAX_X))
+            h3Curset(h3A1X, h3A1Y);
+        if ((h3A1X == h3A1destX) && (h3A1Y == h3A1destY))
+            break;
+        //e2 = 2*err;
+        e2 = (h3A1err < 0) ? (
+                ((h3A1err & 0x40) == 0) ? (
+                                                0x80)
+                                        : (
+                                            h3A1err << 1))
+            : (
+                ((h3A1err & 0x40) != 0) ? (
+                                                0x7F)
+                                        : (
+                                                h3A1err << 1));
+        if (e2 >= h3A1dY) {
+            h3A1err += h3A1dY;  // e_xy+e_x > 0
+            h3A1X += h3A1sX;
+        }
+        if (e2 <= h3A1dX) {  // e_xy+e_y < 0
+            h3A1err += h3A1dX;
+            h3A1Y += h3A1sY;
+        }
+    }
+#endif
 }
 
 void h3Draw(int x0, int y0, int x1, int y1)
